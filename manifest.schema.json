@@ -1,0 +1,38 @@
+{
+	"id": "https://github.com/serban-petrescu/sapim",
+	"title": "Manifest",
+	"type": "object",
+	"properties": {
+		"proxy": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"path": {
+					"type": "string"
+				},
+				"templated": {
+					"type": "boolean",
+					"default": false
+				},
+				"placeholders": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "string"
+					}
+				}
+			},
+			"required": ["name", "path"]
+		},
+		"maps": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"additionalProperties": {
+					
+				}
+			}
+		}
+	}
+}
