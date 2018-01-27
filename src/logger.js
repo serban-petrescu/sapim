@@ -23,18 +23,18 @@ class DefaultLogger {
 
     /**
      * Log a DEBUG-level message.
-     * @param {string} message The message to be logged. 
+     * @param {string} message The message to be logged.
      * @returns {void}
      */
     debug(message) {
         if (this.level <= LOG_LEVEL.DEBUG) {
-            console.debug(message);
+            console.log(message);
         }
     }
-    
+
     /**
      * Log a INFO-level message.
-     * @param {string} message The message to be logged. 
+     * @param {string} message The message to be logged.
      * @returns {void}
      */
     info(message) {
@@ -42,10 +42,10 @@ class DefaultLogger {
             console.info(message);
         }
     }
-    
+
     /**
      * Log a WARN-level message.
-     * @param {string} message The message to be logged. 
+     * @param {string} message The message to be logged.
      * @returns {void}
      */
     warn(message) {
@@ -53,10 +53,10 @@ class DefaultLogger {
             console.warn(message);
         }
     }
-    
+
     /**
      * Log a ERROR-level message.
-     * @param {string} message The message to be logged. 
+     * @param {string} message The message to be logged.
      * @returns {void}
      */
     error(message) {

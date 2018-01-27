@@ -20,13 +20,13 @@ function wrapError(err, msg) {
     if (!err) {
         message = msg;
     } else if (err.response) {
-        message = msg + " Response status: " + err.response.statusCode + ". " + 
+        message = msg + " Response status: " + err.response.statusCode + ". " +
             (typeof err.response.body === "string" ? err.response.body : JSON.stringify(err.response.body));
     } else {
         message = msg + " " + err.toString();
     }
     logger.error(message);
-    throw new Error(message);
+    throw new Error(msg);
 }
 
 function urlForSingleMap(name) {
@@ -68,8 +68,8 @@ export default class ApiClient {
     uploadProxy(data) {
         return this.client
             .then(client => client.post({
-                uri: PROXY_BASE_URL, 
-                body: data, 
+                uri: PROXY_BASE_URL,
+                body: data,
                 headers: {"Content-Type": "application/octet-stream"}
             }))
             .then(() => logger.debug("Successfully uploaded proxy archive."))
@@ -78,8 +78,8 @@ export default class ApiClient {
 
     downloadProxy(name) {
         return this.client
-            .then(client => ({stream: client.get({uri: PROXY_BASE_URL, qs: {name}, encoding: null})}))
-            .then(r => {logger.debug("Successfully downloaded proxy archive: " + name + "."); return r;})
+            .then(client => client.get({uri: PROXY_BASE_URL, qs: {name}, encoding: null}))
+            .then(r => {logger.debug("Successfully downloaded proxy archive: " + name + "."); return r.body;})
             .catch(r => wrapError(r, PROXY_CALL_FAILED));
     }
 }

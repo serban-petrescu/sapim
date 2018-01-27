@@ -1,9 +1,12 @@
 import ApiManager from "./ApiManager";
+import tmp from "tmp";
 import {existsSync, readFileSync} from "fs";
 import {join, resolve} from "path";
 import {homedir} from "os";
 
 import logger from "./logger";
+
+tmp.setGracefulCleanup();
 
 function loadConfig(path) {
     try {
@@ -18,16 +21,21 @@ function loadConfig(path) {
     }
 }
 
-let fileConfig = loadConfig(resolve(".sapim")) || loadConfig(join(homedir(), ".sapim")) || {};
-
-let defaultConfig = {
-    username: process.env.SAPIM_USERNAME || fileConfig.username,
-    password: process.env.SAPIM_PASSWORD || fileConfig.password,
-    host: process.env.SAPIM_HOST || fileConfig.host,
-    proxy: process.env.HTTPS_PROXY || fileConfig.proxy
-};
+let defaultConfigCache = null;
+function defaultConfig() {
+    if (!defaultConfigCache) {
+        let fileConfig = loadConfig(resolve(".sapim")) || loadConfig(join(homedir(), ".sapim")) || {};
+        defaultConfigCache = {
+            username: process.env.SAPIM_USERNAME || fileConfig.username,
+            password: process.env.SAPIM_PASSWORD || fileConfig.password,
+            host: process.env.SAPIM_HOST || fileConfig.host,
+            proxy: process.env.HTTPS_PROXY || fileConfig.proxy
+        };
+    }
+    return defaultConfigCache;
+}
 
 export {ApiManager, logger};
-export default function(config = defaultConfig) {
+export default function(config = defaultConfig()) {
     return new ApiManager(config);
 }
