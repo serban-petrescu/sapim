@@ -1,0 +1,43 @@
+{
+    "tags": {
+        "allowUnknownTags": false,
+        "dictionaries": ["jsdoc", "closure"]
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "babel": {
+        "presets": ["es2015"]
+    },
+    "templates": {
+        "logoFile": "",
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "dateFormat": "dd.MM.yyyy",
+        "outputSourceFiles": true,
+        "outputSourcePath": true,
+        "systemName": "SAP API Management Tools",
+        "footer": "",
+        "copyright": "Copyright - 2018 Serban Petrescu",
+        "navType": "vertical",
+        "theme": "lumen",
+        "linenums": true,
+        "collapseSymbols": false,
+        "inverseNav": true,
+        "protocol": "html://",
+        "methodHeadingReturns": false
+    },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+    },
+    "source": {
+        "include": ["./src", "readme.md", "package.json"]
+    },
+    "opts": {
+        "template": "node_modules/ink-docstrap/template",
+        "encoding": "utf8",
+        "destination": "./docs/",
+        "recurse": true
+    }
+}

@@ -1,7 +1,7 @@
 # sapim
 > SAP API Manager Tools
 
-A suite of tools for deploying and building SAP API Manager API proxies and key-value maps.
+A suite of tools for deploying and building SAP API Manager API proxies and key-value maps. Check out the [wiki](https://github.com/serban-petrescu/sapim/wiki) for more information.
 
 ## Install
 
@@ -33,7 +33,7 @@ maps:
     some-string-key: Some string value
 ```
 ### Command-line interface
-To use the commands that imply communicating with the API Manager, you need to provide a user, password and host for the library to use. You have two options for specifyign them:
+To use the commands that imply communicating with the API Manager, you need to provide a user, password and host for the library to use. You have two options for specifying them:
 
  - Using the environment variables `SAPIM_USERNAME`, `SAPIM_PASSWORD` and `SAPIM_HOST`.
  - Using a [.sapim](https://github.com/serban-petrescu/sapim/wiki/Configuration#using-a-sapim-file) file.
@@ -58,7 +58,7 @@ The following commands are available:
    - [download proxy](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#download-proxy)
 
 ### Programmatic usage
-All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [here]() and you can find the reference documentation [here]().
+All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages]().
 
 Example usage:
 ```js
@@ -67,3 +67,7 @@ Example usage:
         console.log("Success!");
     });
 ```
+## License
+SAP API Management Tools is copyright (c) 2018-present Serban Petrescu <Serban.Petrescu@outlook.com>
+
+This library is free software, licensed under the Apache License, Version 2.0. See the file `LICENSE` in this distribution for more details.

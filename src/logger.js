@@ -1,13 +1,24 @@
 /**
+ * Logging helper module.
+ * @module sapim/logger
+ */
+
+/**
  * The severity of the message(s) logged.
  * @enum {integer}
  */
-let LOG_LEVEL = {
+export const LOG_LEVEL = {
+    /** Debug level */
     DEBUG: 0,
+    /** Info level */
     INFO: 1,
+    /** Warning level */
     WARNING: 2,
+    /** Alias for WARNING */
     WARN: 2,
+    /** Erorr level */
     ERROR: 3,
+    /** Silent level */
     SILENT: 100
 };
 
@@ -71,12 +82,12 @@ let logger = new DefaultLogger();
 /**
  * Overrides the default logger and sets a custom one (either a "subclass" of the
  * DefaultLogger or an interface-compatible object).
+ * @static
  * @param {DefaultLogger|object} customLogger The custom logger object.
  * @returns {void}
  */
-function setLogger(customLogger) {
+export function setLogger(customLogger) {
     logger = customLogger;
 }
 
 export default logger;
-export {LOG_LEVEL, setLogger, DefaultLogger};

@@ -3,11 +3,20 @@
   "version": "0.0.1",
   "description": "SAP API Manager Tools",
   "main": "dst/index.js",
+  "files": [
+    "dst/",
+    "manifest.schema.json",
+    "LICENSE"
+  ],
   "scripts": {
     "start": "node dst/index.js",
     "debug": "node src/index.js",
     "build": "babel src --out-dir dst",
+    "docs": "jsdoc -c .jsdoc.json",
     "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "git": "https://github.com/serban-petrescu/sapim.git"
   },
   "bin": {
     "sapim": "./dst/cli.js"
@@ -41,7 +50,10 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "ink-docstrap": "^1.3.2",
+    "jsdoc": "^3.5.5",
+    "jsdoc-babel": "^0.3.0"
   },
   "babel": {
     "presets": [

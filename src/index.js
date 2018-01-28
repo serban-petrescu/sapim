@@ -35,7 +35,25 @@ function defaultConfig() {
     return defaultConfigCache;
 }
 
-export {ApiManager, logger};
+
+/**
+ * API management tools module.
+ * @module sapim
+ */
+
+/**
+ * Factory function for the API tools class.
+ * @function sapim
+ * @param {Configuration=} config The configuration used for creating the API tools.
+ *  If ommited, the configuration is loaded from the environment and / or the file system.
+ * @returns {ApiManager} The API tools class instance.
+ */
 export default function(config = defaultConfig()) {
     return new ApiManager(config);
 }
+
+export {
+    ApiManager,
+
+    logger
+};
