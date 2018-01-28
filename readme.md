@@ -58,7 +58,7 @@ The following commands are available:
    - [download proxy](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#download-proxy)
 
 ### Programmatic usage
-All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages]().
+All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.1/).
 
 Example usage:
 ```js
@@ -68,6 +68,6 @@ Example usage:
     });
 ```
 ## License
-SAP API Management Tools is copyright (c) 2018-present Serban Petrescu <Serban.Petrescu@outlook.com>
+SAP API Management Tools under copyright (c) 2018-present Serban Petrescu <Serban.Petrescu@outlook.com>
 
 This library is free software, licensed under the Apache License, Version 2.0. See the file `LICENSE` in this distribution for more details.
