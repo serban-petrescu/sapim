@@ -55,7 +55,8 @@ export function createConfigFile(content, global = false, overwrite = false) {
 
 /**
  * Factory function for the API tools class.
- * @function sapim
+ * @function default
+ * @static
  * @param {Configuration=} config The configuration used for creating the API tools.
  *  If ommited, the configuration is loaded from the environment and / or the file system.
  * @returns {ApiManager} The API tools class instance.
