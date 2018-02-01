@@ -59,7 +59,7 @@ The following commands are available:
    - [configure](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#configure)
 
 ### Programmatic usage
-All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.1/).
+All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.2/).
 
 Example usage:
 ```js
