@@ -1,6 +1,11 @@
+/**
+ * API management tools module.
+ * @module sapim
+ */
+
 import ApiManager from "./ApiManager";
 import tmp from "tmp";
-import {existsSync, readFileSync} from "fs";
+import {existsSync, readFileSync, writeFile} from "fs-extra";
 import {join, resolve} from "path";
 import {homedir} from "os";
 
@@ -35,11 +40,18 @@ function defaultConfig() {
     return defaultConfigCache;
 }
 
-
 /**
- * API management tools module.
- * @module sapim
+ * Creates a .sapim configuration file.
+ * @param {Configuration} content The content of the configuration file.
+ * @param {boolean} [global=false] Flag indicating if the configuration should be global.
+ * @param {boolean} [overwrite=false] Flag indicating if the existing configuration (if any) should
+ *  be overwritten.
  */
+export function createConfigFile(content, global = false, overwrite = false) {
+    let file = global ? join(homedir(), ".sapim") : resolve(".sapim");
+    let opts = overwrite ? {flag: "w"} : {flag: "wx"};
+    return writeFile(file, JSON.stringify(content, null, 4), opts);
+}
 
 /**
  * Factory function for the API tools class.

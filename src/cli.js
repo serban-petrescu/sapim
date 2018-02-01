@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-import sapim from "./index";
+import sapim, {createConfigFile} from "./index";
 import program from "commander";
+import prompt from "prompt";
 import {version, name, description} from "../package.json";
 
 import logger, {LOG_LEVEL} from "./logger";
@@ -97,5 +98,42 @@ program.command("package-proxy <directory> <target_archive> [placeholders...]")
 program.command("upload-proxy <archive>")
     .description("upload an API proxy as an archive to the API Portal")
     .action(wrapAction(path => sapim().uploadProxy(path)));
+
+program.command("config")
+    .description("configure the sapim library (create a .sapim file)")
+    .option("-g, --global", "creates the file globally (in the home dir)")
+    .option("-f, --force", "overwrites any existing configuration")
+    .action(wrapAction(options => {
+        prompt.start({message: ""});
+        return new Promise((resolve, reject) => {
+            prompt.get({
+                properties: {
+                    host: {
+                        description: "API portal hostname",
+                        required: true
+                    },
+                    username: {
+                        description: "API portal username",
+                        required: true
+                    },
+                    password: {
+                        description: "API portal password",
+                        hidden: true,
+                        required: true
+                    },
+                    proxy: {
+                        description: "HTTPS proxy (optional)",
+                        required: false
+                    }
+                }
+            }, (err, result) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        }).then(content => createConfigFile(content, options.global, options.force));
+    }));
 
 program.parse(process.argv);

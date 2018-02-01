@@ -16,7 +16,11 @@
     "prepublishOnly": "npm run build"
   },
   "repository": {
-    "git": "https://github.com/serban-petrescu/sapim.git"
+    "type": "git",
+    "url": "https://github.com/serban-petrescu/sapim.git"
+  },
+  "bugs": {
+    "url": "https://github.com/serban-petrescu/sapim/issues"
   },
   "bin": {
     "sapim": "./dst/cli.js"
@@ -39,6 +43,7 @@
     "glob-promise": "^3.3.0",
     "js-yaml": "^3.10.0",
     "memorystream": "^0.3.1",
+    "prompt": "^1.0.0",
     "recursive-copy": "^2.0.8",
     "replace": "^0.3.0",
     "request": "^2.83.0",
