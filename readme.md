@@ -63,10 +63,11 @@ All the above commands have a corresponding method exposed as part of the librar
 
 Example usage:
 ```js
-    var sapim = require("sapim")(); // the default instance is lazily instantiated
-    sapim.deployManifest("/path/to/my/manifest.yaml").then(function() {
-        console.log("Success!");
-    });
+    var sapim = require("sapim").default();
+    sapim.deployManifest("/path/to/my/manifest.yaml")
+      .then(function() {
+         console.log("Success!");
+      });
 ```
 ## License
 SAP API Management Tools under copyright (c) 2018-present Serban Petrescu <Serban.Petrescu@outlook.com>
