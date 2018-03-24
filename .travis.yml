@@ -4,8 +4,8 @@ cache:
   directories:
   - node_modules
 script:
- - npm run build
- - npm run docs
+- npm run build
+- npm run docs
 deploy:
   - provider: npm
     skip_cleanup: true
@@ -14,9 +14,21 @@ deploy:
       secure: Cn/BC1sdD6hpy85xJB9+HwOikAB2OUH34ayb+X5uU3s1RExAWWrLwa3DhSRsBEJF5GFv443/+rZH2RYs3VVFEoKpR5+wBZ0eSfyqhLGRj4Fmz3FDGDWMxhX6aiXN1hVzB22sYWnvIk3GwxObZxybroZM8BI2n+AzZw/jvGjPEygiIaTuPLIg7ieplm1A43jEhbM9lhSVS1nuY4KZObcbEgf36cm+0y07q9Uol0AYKsntrt+nZNVRVY+jfhhiAjsMnJUBgyrQAFr9JLyCA+5rdd3HcD6jLuC8pqO/5pr9vuQg+5nLJ0Fdz4l1GjEHPBR3pbTPgwFLpQecQq74pKDvgZMgVDYXBqUUp/B0hERi/s2jc3LamccnIeLYSGwp4cyf8nzaMCQR7oTErGQ0hXC3E8IZeVrHIs85z1lNL4/6J+Fdfm1A2eLL1Ln8W8ZrRoS5exaCQXWA9cKP8nqQwFg1mqLuNqoEYlzPcyMl8vVZahehUaglTotoIYTeuUeo0fjT1hObVps7IdrGk50bpwUCgxA+maJc1qftojAKMvHW2s/OogjqTm4pnkWQleBw980aSfOllEfV5BD/LxYKhzYcLeHySndu6yE7Co7PLy9MDnDM9RSHrD6ukMIVxtzpMw86qW//7oiDNl1RU5uxH26q2SjvsMBkPCFecVNnWHiyihs=
     on:
       tags: true
+
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
     local_dir: docs
     on:
       branch: master
+
+  - provider: releases
+    skip_cleanup: true
+    api_key:
+      secure: o9EnxDn3tmoGdn3T0ZUeuso5J3Iub5ZVZhaXE4CYIBvNPFWlt56/A71NiQPNYTOFuqLjMRRvaj7UNrz3kDqz8qQtGMCoTooTPZwoamTzeRsNwFwmQuXBJZ4dVypewvjUSZ1kgV3P43ZQh1Z5QD3lGtNmDJ8GMaWhhe/FzShG+RcnfC+pjOF7EToZSjjwiQ7YHXxdvt5GwqmrqZdrkbl6wGUV9Q1sr3KlFeB67++1gSHjw7LIhA817QWbpG+n3V3Jxae0a/0f8jqzeCc/ym6RUcMPjMKqyXgjyNkzNFZfJxB/6dtKDNjKlkjB3j65OY9xTEj91SNEY6B0XKjGgqx1Yoa8R9mO19O5l6F8NQh7R0NqZCOeetUnEUf1o7ei59w3whD6iEJVO9ooZMvKavcBVEmk9fMU9ZrsSAObDAmY4Eixs8fB2e3LCgF0J8Fx2cTI0NG3HgVjWxEktk7oXZlvFdF3HOfe7XPtZqQy2VQqgtLweUQ8QPfaC8iEKMLacmzS7SUHEtiEXce5AMvMPca5Sr/NmyS2xfoVR7NOIn9yOaKdN9gfemH9FiNaYe6jm4w0I4f93OhoWwvB6R9xhSvHWGM4fzB/HPKo/u5xtinNi+pgNfz/ZllbOGdOrcVUbjXfQBcm0r+GoEeNFffpotPMnIARHrUZKx7OxGtteC7mJDA=
+    file:
+      - bin/cli-linux
+      - bin/cli-macos
+      - bin/cli-win.exe
+    on:
+      tags: true
