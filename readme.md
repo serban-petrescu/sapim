@@ -4,6 +4,7 @@
 A suite of tools for deploying and building SAP API Manager API proxies and key-value maps. Check out the [wiki](https://github.com/serban-petrescu/sapim/wiki) for more information.
 
 ## Install
+### Via npm
 
 ```sh
 # If you just want to use the command line interface:
@@ -15,6 +16,8 @@ npm install sapim --save-dev
 # If you want to use the API during runtime:
 npm install sapim --save
 ```
+### Binary download
+For using the library purely as a command line tool, a binary version (for x64 OS) can be downloaded from the [releases](https://github.com/serban-petrescu/sapim/releases) section. This binary exexcutable does not depend on the presence of NodeJS or NPM on your system. 
 
 ## Usage
 ### Manifests
