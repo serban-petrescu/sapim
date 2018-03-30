@@ -1,6 +1,6 @@
 {
   "name": "sapim",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "SAP API Manager Tools",
   "main": "dst/index.js",
   "files": [
