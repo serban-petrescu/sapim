@@ -1,14 +1,15 @@
 import ApiClient from "./ApiClient";
 
 import applyTemplate from "./command/applyTemplate";
-import deployManifest, {deployManifestsMatching} from "./command/deployManifest";
+import deployManifest, { deployManifestsMatching } from "./command/deployManifest";
 import deployProxy from "./command/deployProxy";
 import downloadProxy from "./command/downloadProxy";
-import extractTemplate, {extractTemplateFromManifest} from "./command/extractTemplate";
-import packageManifest, {packageManifestsMatching} from "./command/packageManifest";
-import packageProxy, {packageProxyToFile} from "./command/packageProxy";
-import updateMap, {updateMapsFromObject} from "./command/updateMap";
+import extractTemplate, { extractTemplateFromManifest } from "./command/extractTemplate";
+import packageManifest, { packageManifestsMatching } from "./command/packageManifest";
+import packageProxy, { packageProxyToFile } from "./command/packageProxy";
+import updateMap, { updateMapsFromObject } from "./command/updateMap";
 import uploadProxy from "./command/uploadProxy";
+import readProxyUrl, { readManifestUrl } from "./command/readProxyUrl";
 
 /**
  * @typedef {object} Configuration
@@ -121,6 +122,24 @@ class ApiManager {
      */
     getConfiguredHost() {
         return this.config.host;
+    }
+
+    /**
+     * Reads the full base URL for a given API proxy.
+     * @param {string} name The name of the API proxy.
+     * @returns {Promise} A promise which resolves with the URL as a string.
+     */
+    getProxyUrl(name) {
+        return readProxyUrl(this.client, name);
+    }
+
+    /**
+     * Reads the full base URL for a proxy described by the given manifest.
+     * @param {string} path The path of the manifest file.
+     * @returns {Promise} A promise which resolves with the URL as a string.
+     */
+    getManifestUrl(path) {
+        return readManifestUrl(this.client, path);
     }
 
     /**

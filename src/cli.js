@@ -80,6 +80,14 @@ program.command("extract-template <manifest> [target_directory]")
     .action(wrapAction((manifest, target, options) =>
         sapim().extractTemplateFromManifest(manifest, target, options.clean)));
 
+program.command("get-proxy-url <name>")
+    .description("retrieves the base URL for the given proxy")
+    .action(wrapAction(name => sapim().getProxyUrl(name).then(s => console.log(s))));
+
+program.command("get-manifest-url <path>")
+    .description("retrieves the base URL for the proxy described by the given manifest")
+    .action(wrapAction(path => sapim().getManifestUrl(path).then(s => console.log(s))));
+
 program.command("package <manifest> [target_archive]")
     .description("package the API proxy described by the given manifest into an archive")
     .action(wrapAction((path, target) => sapim().packageManifest(path, target)));

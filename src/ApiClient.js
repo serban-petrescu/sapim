@@ -7,6 +7,16 @@ const CSRF_CALL_FAILED = "Unable to retrieve CSRF token.";
 const PROXY_CALL_FAILED = "Unable to call API proxy management endpoint.";
 
 const MAP_ENTITY_SET_URL = "/Management.svc/KeyMapEntries";
+const PROXY_INFO_URL = "/Management.svc/APIProxies";
+const PROXY_INFO_EXPAND = "$expand=proxyEndPoints,targetEndPoints,apiProducts,proxyEndPoints/virtualhosts," +
+    "proxyEndPoints/routeRules,%20proxyEndPoints/apiResources,proxyEndPoints/apiResources/documentations," +
+    "policies,fileResources,%20proxyEndPoints/preFlow/request/steps,proxyEndPoints/preFlow/response/steps," +
+    "proxyEndPoints/postFlow/request/steps,proxyEndPoints/postFlow/response/steps," +
+    "proxyEndPoints/conditionalFlows/request/steps,proxyEndPoints/conditionalFlows/response/steps," +
+    "targetEndPoints/preFlow/request/steps,targetEndPoints/preFlow/response/steps," +
+    "targetEndPoints/postFlow/request/steps,targetEndPoints/postFlow/response/steps," +
+    "targetEndPoints/conditionalFlows/request/steps,targetEndPoints/conditionalFlows/response/steps," +
+    "targetEndPoints/properties,proxyEndPoints/properties";
 const PROXY_BASE_URL = "/Transport.svc/APIProxies";
 
 const CSRF_HEADER = "x-csrf-token";
@@ -48,19 +58,19 @@ export default class ApiClient {
                 password: config.password
             }
         });
-        this.client = base.head({uri: "/Management.svc", headers: {[CSRF_HEADER]: "fetch"}})
-            .then(r => base.defaults({headers: {[CSRF_HEADER]: r.headers[CSRF_HEADER] || ""}}))
+        this.client = base.head({ uri: "/Management.svc", headers: { [CSRF_HEADER]: "fetch" } })
+            .then(r => base.defaults({ headers: { [CSRF_HEADER]: r.headers[CSRF_HEADER] || "" } }))
             .catch(r => wrapError(r, CSRF_CALL_FAILED));
     }
 
     deleteMap(name) {
         return this.client.then(client => client.delete(urlForSingleMap(name)))
             .then(() => logger.debug("Successfully deleted map: " + name + "."))
-            .catch(r =>  (r && r.response && r.response.status) === 404 ? null : wrapError(r, MAP_CALL_FAILED));
+            .catch(r => (r && r.response && r.response.status) === 404 ? null : wrapError(r, MAP_CALL_FAILED));
     }
 
     createMap(name, content) {
-        return this.client.then(client => client.post({uri: MAP_ENTITY_SET_URL, body: content, json: true}))
+        return this.client.then(client => client.post({ uri: MAP_ENTITY_SET_URL, body: content, json: true }))
             .then(() => logger.debug("Successfully created map: " + name + "."))
             .catch(r => wrapError(r, MAP_CALL_FAILED));
     }
@@ -70,7 +80,7 @@ export default class ApiClient {
             .then(client => client.post({
                 uri: PROXY_BASE_URL,
                 body: data,
-                headers: {"Content-Type": "application/octet-stream"}
+                headers: { "Content-Type": "application/octet-stream" }
             }))
             .then(() => logger.debug("Successfully uploaded proxy archive."))
             .catch(r => wrapError(r, PROXY_CALL_FAILED));
@@ -78,8 +88,16 @@ export default class ApiClient {
 
     downloadProxy(name) {
         return this.client
-            .then(client => client.get({uri: PROXY_BASE_URL, qs: {name}, encoding: null}))
-            .then(r => {logger.debug("Successfully downloaded proxy archive: " + name + "."); return r.body;})
+            .then(client => client.get({ uri: PROXY_BASE_URL, qs: { name }, encoding: null }))
+            .then(r => { logger.debug("Successfully downloaded proxy archive: " + name + "."); return r.body; })
+            .catch(r => wrapError(r, PROXY_CALL_FAILED));
+    }
+
+    readProxyInfo(name) {
+        let uri = PROXY_INFO_URL + "(name='" + name + "')?" + PROXY_INFO_EXPAND;
+        return this.client
+            .then(client => client.get({ uri, json: true }))
+            .then(r => { logger.debug("Successfully read proxy info: " + name + "."); return r.body.d; })
             .catch(r => wrapError(r, PROXY_CALL_FAILED));
     }
 }
