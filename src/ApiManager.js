@@ -31,6 +31,7 @@ class ApiManager {
      */
     constructor(config) {
         this.client = new ApiClient(config);
+        this.config = config;
     }
 
     /**
@@ -112,6 +113,14 @@ class ApiManager {
      */
     extractTemplateFromManifest(manifestPath, target, clean = false) {
         return extractTemplateFromManifest(this.client, manifestPath, target, clean);
+    }
+
+    /**
+     * Returns the configured API Manager host.
+     * @returns {string} The host of the API Manager.
+     */
+    getConfiguredHost() {
+        return this.config.host;
     }
 
     /**
