@@ -60,6 +60,9 @@ The following commands are available:
    - [upload proxy](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#upload-proxy)
    - [download proxy](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#download-proxy)
    - [configure](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#configure)
+   - [get proxy url](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-proxy-url)
+   - [get manifest url](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-manifest-url)
+   - [get virtual host info](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-virtual-host-info)
 
 ### Programmatic usage
 All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.6/).
