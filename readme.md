@@ -17,7 +17,7 @@ npm install sapim --save-dev
 npm install sapim --save
 ```
 ### Binary download
-For using the library purely as a command line tool, a binary version (for x64 OS) can be downloaded from the [releases](https://github.com/serban-petrescu/sapim/releases) section. This binary exexcutable does not depend on the presence of NodeJS or NPM on your system. 
+For using the library purely as a command line tool, a binary version (for x64 OS) can be downloaded from the [releases](https://github.com/serban-petrescu/sapim/releases) section. This binary exexcutable does not depend on the presence of NodeJS or NPM on your system.
 
 ## Usage
 ### Manifests
@@ -62,7 +62,7 @@ The following commands are available:
    - [configure](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#configure)
 
 ### Programmatic usage
-All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.2/).
+All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.6/).
 
 Example usage:
 ```js

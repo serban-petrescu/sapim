@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-import sapim, {createConfigFile} from "./index";
+import sapim, { createConfigFile } from "./index";
 import program from "commander";
 import prompt from "prompt";
-import {version, name, description} from "../package.json";
+import { version, name, description } from "../package.json";
 
-import logger, {LOG_LEVEL} from "./logger";
+import logger, { LOG_LEVEL } from "./logger";
 
 function wrapAction(cb) {
-    return function(...args) {
+    return function (...args) {
         if (program.silent) {
             logger.level = LOG_LEVEL.SILENT;
         } else if (program.debug) {
@@ -88,6 +88,22 @@ program.command("get-manifest-url <path>")
     .description("retrieves the base URL for the proxy described by the given manifest")
     .action(wrapAction(path => sapim().getManifestUrl(path).then(s => console.log(s))));
 
+program.command("get-vhost-info")
+    .description("retrieves the information pertaining virtual host(s); without any options, retrieves the default vhost")
+    .option("-i, --id <id>", "uses the given id to select the vhost")
+    .option("-a, --all", "retrieves all the virtual host available")
+    .action(wrapAction(command => {
+        let result;
+        if (command.id) {
+            result = sapim().getVirtualHostInfoById(command.id);
+        } else if (command.all) {
+            result = sapim().getAllVirtualHostInfo();
+        } else {
+            result = sapim().getDefaultVirtualHostInfo();
+        }
+        return result.then(info => console.log(JSON.stringify(info, null, 4)));
+    }));
+
 program.command("package <manifest> [target_archive]")
     .description("package the API proxy described by the given manifest into an archive")
     .action(wrapAction((path, target) => sapim().packageManifest(path, target)));
@@ -112,7 +128,7 @@ program.command("config")
     .option("-g, --global", "creates the file globally (in the home dir)")
     .option("-f, --force", "overwrites any existing configuration")
     .action(wrapAction(options => {
-        prompt.start({message: ""});
+        prompt.start({ message: "" });
         return new Promise((resolve, reject) => {
             prompt.get({
                 properties: {

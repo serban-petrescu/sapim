@@ -9,7 +9,8 @@ import packageManifest, { packageManifestsMatching } from "./command/packageMani
 import packageProxy, { packageProxyToFile } from "./command/packageProxy";
 import updateMap, { updateMapsFromObject } from "./command/updateMap";
 import uploadProxy from "./command/uploadProxy";
-import readProxyUrl, { readManifestUrl } from "./command/readProxyUrl";
+import { readManifestUrl, readProxyUrl, readVirtualHostById, readDefaultVirtualHost,
+    readAllVirtualHosts } from "./command/readInfo";
 
 /**
  * @typedef {object} Configuration
@@ -19,6 +20,21 @@ import readProxyUrl, { readManifestUrl } from "./command/readProxyUrl";
  * @property {string} host The hostname of the API Portal.
  * @property {string=} proxy Optional (https) proxy server URI.
  */
+
+
+/**
+ * @typedef {object} VirtualHost
+ * @description An object containing virtual host information
+ * @property {string} id The id of the virtual host.
+ * @property {string} name The name of the virtual host.
+ * @property {string} url The base url for the virtual host.
+ * @property {string} host The hostname of the virtual host.
+ * @property {number=} port The port of the virtual host; may be null.
+ * @property {boolean} ssl Flag indicating if the host is on SSL.
+ * @property {string=} projectPath The project path on the host; may be null.
+ * @property {boolean} default Flag indicating if the virtual host is the default one.
+ */
+
 
 /**
  * Public API class for the library.
@@ -140,6 +156,31 @@ class ApiManager {
      */
     getManifestUrl(path) {
         return readManifestUrl(this.client, path);
+    }
+
+    /**
+     * Reads the information for a virtual host (given by id).
+     * @param {string} id The id of the host.
+     * @returns {Promise<VirtualHost>} A promise which resolves with the virtual host information.
+     */
+    getVirtualHostInfoById(id) {
+        return readVirtualHostById(this.client, id);
+    }
+
+    /**
+     * Reads the information for the default virtual hosts.
+     * @returns {Promise<VirtualHost>} A promise which resolves with the virtual host information.
+     */
+    getDefaultVirtualHostInfo() {
+        return readDefaultVirtualHost(this.client);
+    }
+
+    /**
+     * Reads the information for the all virtual hosts.
+     * @returns {Promise<VirtualHost[]>} A promise which resolves with the virtual host information.
+     */
+    getAllVirtualHostInfo() {
+        return readAllVirtualHosts(this.client);
     }
 
     /**

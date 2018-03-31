@@ -5,6 +5,7 @@ import logger from "./logger";
 const MAP_CALL_FAILED = "Unable to call key value management endpoint.";
 const CSRF_CALL_FAILED = "Unable to retrieve CSRF token.";
 const PROXY_CALL_FAILED = "Unable to call API proxy management endpoint.";
+const VHOST_CALL_FAILED = "Unable to call virtual host endpoint.";
 
 const MAP_ENTITY_SET_URL = "/Management.svc/KeyMapEntries";
 const PROXY_INFO_URL = "/Management.svc/APIProxies";
@@ -18,6 +19,7 @@ const PROXY_INFO_EXPAND = "$expand=proxyEndPoints,targetEndPoints,apiProducts,pr
     "targetEndPoints/conditionalFlows/request/steps,targetEndPoints/conditionalFlows/response/steps," +
     "targetEndPoints/properties,proxyEndPoints/properties";
 const PROXY_BASE_URL = "/Transport.svc/APIProxies";
+const VIRTUAL_HOSTS_URL = "/Management.svc/VirtualHosts";
 
 const CSRF_HEADER = "x-csrf-token";
 
@@ -99,5 +101,12 @@ export default class ApiClient {
             .then(client => client.get({ uri, json: true }))
             .then(r => { logger.debug("Successfully read proxy info: " + name + "."); return r.body.d; })
             .catch(r => wrapError(r, PROXY_CALL_FAILED));
+    }
+
+    readVirtualHosts() {
+        return this.client
+            .then(client => client.get({ uri: VIRTUAL_HOSTS_URL, json: true }))
+            .then(r => { logger.debug("Successfully read virtual host info."); return r.body.d.results; })
+            .catch(r => wrapError(r, VHOST_CALL_FAILED));
     }
 }
