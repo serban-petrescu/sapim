@@ -13,11 +13,18 @@ import logger from "./logger";
 
 tmp.setGracefulCleanup();
 
-function loadConfig(path) {
+/**
+ * Utility function for loading a configuration file.
+ * @param {string} path The path to the config file.
+ * @returns {Configuration} The resulting configuration or null if not found.
+ */
+export function loadConfigFile(path) {
     try {
         if (existsSync(path)) {
+            logger.debug("Loading configuration file: " + path);
             return JSON.parse(readFileSync(path, "utf8"));
         } else {
+            logger.debug("No configuration file found at: " + path + ". Skipping.");
             return null;
         }
     } catch (e) {
@@ -26,15 +33,25 @@ function loadConfig(path) {
     }
 }
 
+function getProperty(field, envVar, config) {
+    if (process.env[envVar]) {
+        logger.debug("Using " + field + " from the environment.");
+        return process.env[envVar];
+    } else {
+        logger.debug("Using " + field + " from the configuration.");
+        return config[field];
+    }
+}
+
 let defaultConfigCache = null;
 function defaultConfig() {
     if (!defaultConfigCache) {
-        let fileConfig = loadConfig(resolve(".sapim")) || loadConfig(join(homedir(), ".sapim")) || {};
+        let fileConfig = loadConfigFile(resolve(".sapim")) || loadConfigFile(join(homedir(), ".sapim")) || {};
         defaultConfigCache = {
-            username: process.env.SAPIM_USERNAME || fileConfig.username,
-            password: process.env.SAPIM_PASSWORD || fileConfig.password,
-            host: process.env.SAPIM_HOST || fileConfig.host,
-            proxy: process.env.HTTPS_PROXY || fileConfig.proxy
+            username: getProperty("username", "SAPIM_USERNAME", fileConfig),
+            password: getProperty("password", "SAPIM_PASSWORD", fileConfig),
+            host: getProperty("host", "SAPIM_HOST", fileConfig),
+            proxy: getProperty("proxy", "HTTPS_PROXY", fileConfig)
         };
     }
     return defaultConfigCache;
@@ -67,6 +84,5 @@ export default function(config = defaultConfig()) {
 
 export {
     ApiManager,
-
     logger
 };

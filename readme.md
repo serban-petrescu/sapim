@@ -39,6 +39,7 @@ maps:
 To use the commands that imply communicating with the API Manager, you need to provide a user, password and host for the library to use. You have two options for specifying them:
 
  - Using the environment variables `SAPIM_USERNAME`, `SAPIM_PASSWORD` and `SAPIM_HOST`.
+ - Using a [.env](https://github.com/motdotla/dotenv) file for loading the environment variables mentioned above.
  - Using a [.sapim](https://github.com/serban-petrescu/sapim/wiki/Configuration#using-a-sapim-file) file.
 
 For more details, check out the [configuration](https://github.com/serban-petrescu/sapim/wiki/Configuration) wiki page.
@@ -65,7 +66,7 @@ The following commands are available:
    - [get virtual host info](https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-virtual-host-info)
 
 ### Programmatic usage
-All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.6/).
+All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it [in the corresponding wiki page](https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage) and you can find the reference documentation [on GitHub Pages](https://serban-petrescu.github.io/sapim/sapim/0.0.7/).
 
 Example usage:
 ```js

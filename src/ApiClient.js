@@ -58,6 +58,12 @@ export default class ApiClient {
             auth: {
                 username: config.username,
                 password: config.password
+            },
+            callback: function(error, response) {
+                if (!error) {
+                    logger.debug("Got response status " + response.statusCode + " " + response.statusMessage +
+                        " from: '" + response.request.uri.path + "'.");
+                }
             }
         });
         this.client = base.head({ uri: "/Management.svc", headers: { [CSRF_HEADER]: "fetch" } })
