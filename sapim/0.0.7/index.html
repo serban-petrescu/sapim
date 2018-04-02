@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SAP API Management Tools Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.lumen.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">SAP API Management Tools</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-sapim.html">sapim</a></li><li><a href="module-sapim_logger.html">sapim/logger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="ApiManager.html">ApiManager</a></li><li><a href="module-sapim_logger-DefaultLogger.html">sapim/logger~DefaultLogger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html">Global</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+    <h3>sapim 0.0.7</h3>
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>sapim</h1><blockquote>
+<p>SAP API Manager Tools</p>
+</blockquote>
+<p>A suite of tools for deploying and building SAP API Manager API proxies and key-value maps. Check out the <a href="https://github.com/serban-petrescu/sapim/wiki">wiki</a> for more information.</p>
+<h2>Install</h2><h3>Via npm</h3><pre class="prettyprint source lang-sh"><code># If you just want to use the command line interface:
+npm install sapim -g
+
+# If you want to use the package during development or build-time:
+npm install sapim --save-dev
+
+# If you want to use the API during runtime:
+npm install sapim --save</code></pre><h3>Binary download</h3><p>For using the library purely as a command line tool, a binary version (for x64 OS) can be downloaded from the <a href="https://github.com/serban-petrescu/sapim/releases">releases</a> section. This binary exexcutable does not depend on the presence of NodeJS or NPM on your system.</p>
+<h2>Usage</h2><h3>Manifests</h3><p>The package uses YAML or JSON-based manifests for describing the API Manager artifacts. These manifest must adhere to the schema described by <code>manifest.schema.json</code>.</p>
+<pre class="prettyprint source lang-yml"><code>proxy:
+  name: my-test-proxy
+  path: ./my-test-proxy
+  templated: true
+  placeholders:
+    some-placeholder-name: My string value here
+    another-placeholder: Another string value here
+maps:
+  my-first-map-name:
+    some-string-key: Some string value</code></pre><h3>Command-line interface</h3><p>To use the commands that imply communicating with the API Manager, you need to provide a user, password and host for the library to use. You have two options for specifying them:</p>
+<ul>
+<li>Using the environment variables <code>SAPIM_USERNAME</code>, <code>SAPIM_PASSWORD</code> and <code>SAPIM_HOST</code>.</li>
+<li>Using a <a href="https://github.com/motdotla/dotenv">.env</a> file for loading the environment variables mentioned above.</li>
+<li>Using a <a href="https://github.com/serban-petrescu/sapim/wiki/Configuration#using-a-sapim-file">.sapim</a> file.</li>
+</ul>
+<p>For more details, check out the <a href="https://github.com/serban-petrescu/sapim/wiki/Configuration">configuration</a> wiki page.</p>
+<p>The following commands are available:</p>
+<ul>
+<li>build commands<ul>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#package">package manifest</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#package-all-manifests">package all</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#package-proxy">package proxy</a></li>
+</ul>
+</li>
+<li>deployment commands<ul>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#deploy-manifest">deploy manifest</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#deploy-all-manifests">deploy all</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#deploy-proxy">deploy proxy</a></li>
+</ul>
+</li>
+<li>template commands<ul>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#apply-template">apply template</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#extract-template-from-manifest">extract template (manifest)</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#extract-template-from-files">extract template (proxy)</a></li>
+</ul>
+</li>
+<li>misc commands<ul>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#upload-proxy">upload proxy</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#download-proxy">download proxy</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#configure">configure</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-proxy-url">get proxy url</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-manifest-url">get manifest url</a></li>
+<li><a href="https://github.com/serban-petrescu/sapim/wiki/Command-Line-Interface#get-virtual-host-info">get virtual host info</a></li>
+</ul>
+</li>
+</ul>
+<h3>Programmatic usage</h3><p>All the above commands have a corresponding method exposed as part of the library's public API. You can read more about using it <a href="https://github.com/serban-petrescu/sapim/wiki/Programmatic-Usage">in the corresponding wiki page</a> and you can find the reference documentation <a href="https://serban-petrescu.github.io/sapim/sapim/0.0.7/">on GitHub Pages</a>.</p>
+<p>Example usage:</p>
+<pre class="prettyprint source lang-js"><code>    var sapim = require(&quot;sapim&quot;).default();
+    sapim.deployManifest(&quot;/path/to/my/manifest.yaml&quot;)
+      .then(function() {
+         console.log(&quot;Success!&quot;);
+      });</code></pre><h2>License</h2><p>SAP API Management Tools under copyright (c) 2018-present Serban Petrescu <a href="mailto:&#x53;&#x65;&#114;&#x62;&#97;&#x6e;&#x2e;&#x50;&#101;&#116;&#114;&#x65;&#x73;&#x63;&#117;&#64;&#111;&#117;&#x74;&#x6c;&#x6f;&#x6f;&#107;&#x2e;&#x63;&#x6f;&#109;">&#x53;&#x65;&#114;&#x62;&#97;&#x6e;&#x2e;&#x50;&#101;&#116;&#114;&#x65;&#x73;&#x63;&#117;&#64;&#111;&#117;&#x74;&#x6c;&#x6f;&#x6f;&#107;&#x2e;&#x63;&#x6f;&#109;</a></p>
+<p>This library is free software, licensed under the Apache License, Version 2.0. See the file <code>LICENSE</code> in this distribution for more details.</p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright - 2018 Serban Petrescu
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Mo.04.yyyy
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

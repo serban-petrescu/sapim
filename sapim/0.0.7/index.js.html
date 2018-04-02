@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SAP API Management Tools Source: index.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.lumen.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">SAP API Management Tools</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-sapim.html">sapim</a></li><li><a href="module-sapim_logger.html">sapim/logger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="ApiManager.html">ApiManager</a></li><li><a href="module-sapim_logger-DefaultLogger.html">sapim/logger~DefaultLogger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html">Global</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: index.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/**
+ * API management tools module.
+ * @module sapim
+ */
+
+import ApiManager from "./ApiManager";
+import tmp from "tmp";
+import {existsSync, readFileSync, writeFile} from "fs-extra";
+import {join, resolve} from "path";
+import {homedir} from "os";
+
+import logger from "./logger";
+
+tmp.setGracefulCleanup();
+
+/**
+ * Utility function for loading a configuration file.
+ * @param {string} path The path to the config file.
+ * @returns {Configuration} The resulting configuration or null if not found.
+ */
+export function loadConfigFile(path) {
+    try {
+        if (existsSync(path)) {
+            logger.debug("Loading configuration file: " + path);
+            return JSON.parse(readFileSync(path, "utf8"));
+        } else {
+            logger.debug("No configuration file found at: " + path + ". Skipping.");
+            return null;
+        }
+    } catch (e) {
+        logger.warn("Unable to parse .sapim config file from: " + path + ". " + e.toString());
+        return null;
+    }
+}
+
+function getProperty(field, envVar, config) {
+    if (process.env[envVar]) {
+        logger.debug("Using " + field + " from the environment.");
+        return process.env[envVar];
+    } else {
+        logger.debug("Using " + field + " from the configuration.");
+        return config[field];
+    }
+}
+
+let defaultConfigCache = null;
+function defaultConfig() {
+    if (!defaultConfigCache) {
+        let fileConfig = loadConfigFile(resolve(".sapim")) || loadConfigFile(join(homedir(), ".sapim")) || {};
+        defaultConfigCache = {
+            username: getProperty("username", "SAPIM_USERNAME", fileConfig),
+            password: getProperty("password", "SAPIM_PASSWORD", fileConfig),
+            host: getProperty("host", "SAPIM_HOST", fileConfig),
+            proxy: getProperty("proxy", "HTTPS_PROXY", fileConfig)
+        };
+    }
+    return defaultConfigCache;
+}
+
+/**
+ * Creates a .sapim configuration file.
+ * @param {Configuration} content The content of the configuration file.
+ * @param {boolean} [global=false] Flag indicating if the configuration should be global.
+ * @param {boolean} [overwrite=false] Flag indicating if the existing configuration (if any) should
+ *  be overwritten.
+ */
+export function createConfigFile(content, global = false, overwrite = false) {
+    let file = global ? join(homedir(), ".sapim") : resolve(".sapim");
+    let opts = overwrite ? {flag: "w"} : {flag: "wx"};
+    return writeFile(file, JSON.stringify(content, null, 4), opts);
+}
+
+/**
+ * Factory function for the API tools class.
+ * @function default
+ * @static
+ * @param {Configuration=} config The configuration used for creating the API tools.
+ *  If ommited, the configuration is loaded from the environment and / or the file system.
+ * @returns {ApiManager} The API tools class instance.
+ */
+export default function(config = defaultConfig()) {
+    return new ApiManager(config);
+}
+
+export {
+    ApiManager,
+    logger
+};</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	Copyright - 2018 Serban Petrescu
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Mo.04.yyyy
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
