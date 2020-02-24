@@ -18,7 +18,10 @@ function wrapAction(cb) {
         try {
             let promise = cb.apply(null, args);
             if (promise && promise.catch) {
-                promise.catch(e => logger.error("Operation failed with error: " + e.toString()));
+                promise.catch(e => {
+                    logger.error("Operation failed with error: " + e.toString());
+                    process.exitCode = 1;
+                });
             }
         } catch (e) {
             logger.error("Operation failed with error: " + e.toString());
